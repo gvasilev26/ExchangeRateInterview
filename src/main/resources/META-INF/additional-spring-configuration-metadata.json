@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "rates.accessKey",
+      "type": "java.lang.String",
+      "description": "Exchange rates API access key."
+    }
+  ]
+}
