@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 public class  RatesController {
@@ -19,21 +20,21 @@ public class  RatesController {
         this.ratesService = ratesService;
     }
 
-    @PostMapping("api/v1/rates/amount")
+    @PostMapping("api/v1/transaction")
     @ResponseBody
-    public Transaction getAmountInTargetCurrency(@RequestBody ExchangeRatesPair req) {
-        return ratesService.getAmountByCurrency(req);
+    public Transaction createExchangeTransaction(@RequestBody ExchangeRatesPair req) {
+        return ratesService.createExchangeTransaction(req);
     }
 
-    @PostMapping("api/v1/rates")
+    @PostMapping("api/v1/rate")
     @ResponseBody
-    public BigDecimal getRateInTargetCurrency(@RequestBody ExchangeRatesPair req) {
-        return ratesService.getRateByCurrency(req);
+    public BigDecimal getExchangeRateByTargetCurrency(@RequestBody ExchangeRatesPair req) {
+        return ratesService.getExchangeRateByCurrency(req);
     }
 
-    @PostMapping("api/v1/transactions")
+    @PostMapping("api/v1/transactions/{pageNum}/{pageSize}")
     @ResponseBody
-    public Transaction getTransactions(@RequestBody TransactionRequest req) {
-        return ratesService.getTransactionByIdOrDate(req);
+    public List<Transaction> getAllTransactionsPaginatedByIdOrDate(@RequestBody TransactionRequest req, @PathVariable int pageNum, @PathVariable int pageSize) {
+        return ratesService.getTransactionsPaginatedByIdOrDate(req, pageNum, pageSize);
     }
 }

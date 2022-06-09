@@ -15,13 +15,18 @@ import java.util.Optional;
 @Setter
 public class TransactionRequest {
     private String id;
-    private Date transactionDate;
+    private Date startDate;
+    private Date endDate;
 
     public Optional<String> getId() {
         return Optional.ofNullable(id);
     }
 
-    public Optional<Date> getTransactionDate() {
-        return Optional.ofNullable(transactionDate);
+    public Optional<Date> getStartDate() {
+        return Optional.ofNullable(startDate);
+    }
+
+    public Optional<Date> getEndDate() {
+        return Optional.ofNullable(endDate);
     }
 }
