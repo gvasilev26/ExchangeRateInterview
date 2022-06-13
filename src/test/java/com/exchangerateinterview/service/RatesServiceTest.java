@@ -1,10 +1,10 @@
 package com.exchangerateinterview.service;
 
 import com.exchangerateinterview.client.RatesClient;
-import com.exchangerateinterview.model.ExchangeRates;
-import com.exchangerateinterview.model.ExchangeRatesPair;
+import com.exchangerateinterview.dto.ExchangeRates;
+import com.exchangerateinterview.dto.ExchangeRatesPair;
 import com.exchangerateinterview.model.Transaction;
-import com.exchangerateinterview.model.TransactionRequest;
+import com.exchangerateinterview.dto.TransactionRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package com.exchangerateinterview.service;
 
-import com.exchangerateinterview.model.ExchangeRatesPair;
+import com.exchangerateinterview.dto.ExchangeRatesPair;
 import com.exchangerateinterview.model.Transaction;
-import com.exchangerateinterview.model.TransactionRequest;
+import com.exchangerateinterview.dto.TransactionRequest;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;

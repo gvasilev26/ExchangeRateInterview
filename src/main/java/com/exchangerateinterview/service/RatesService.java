@@ -1,9 +1,9 @@
 package com.exchangerateinterview.service;
 
 import com.exchangerateinterview.client.RatesClient;
-import com.exchangerateinterview.model.ExchangeRatesPair;
+import com.exchangerateinterview.dto.ExchangeRatesPair;
 import com.exchangerateinterview.model.Transaction;
-import com.exchangerateinterview.model.TransactionRequest;
+import com.exchangerateinterview.dto.TransactionRequest;
 import com.exchangerateinterview.util.CurrencyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +32,8 @@ public class RatesService implements IRatesService {
         if (currencyPair.getTargetCurrency() == null || currencyPair.getSourceCurrency() == null || currencyPair.getAmount().doubleValue() == 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not all arguments provided");
         }
+        if (currencyPair.getTargetCurrency().equals(currencyPair.getSourceCurrency()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Target and source currency cannot be the same value");
 
         var quotes = this.ratesClient.getLatestRates().getQuotes();
         var targetRateToUSD = CurrencyUtils.getRateByCurrency(currencyPair.getTargetCurrency(), quotes);
@@ -50,6 +52,8 @@ public class RatesService implements IRatesService {
         if (currencyPair.getTargetCurrency() == null || currencyPair.getSourceCurrency() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not all arguments provided");
         }
+        if (currencyPair.getTargetCurrency().equals(currencyPair.getSourceCurrency()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Target and source currency cannot be the same value");
 
         var quotes = this.ratesClient.getLatestRates().getQuotes();
         var targetRateToUSD = CurrencyUtils.getRateByCurrency(currencyPair.getTargetCurrency(), quotes);
@@ -60,6 +64,9 @@ public class RatesService implements IRatesService {
 
     @Override
     public List<Transaction> getTransactionsPaginatedByIdOrDate(TransactionRequest req, int pageNum, int pageSize) throws ResponseStatusException {
+        if (pageNum < 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Page number must be above or 0");
+        if (pageSize < 1) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Page size must be above or 1");
+
         if (req.getId().isPresent() && req.getStartDate().isPresent() && req.getEndDate().isPresent()) {
             return transactionService.findPaginatedByIdAndDate(req.getId().get(), req.getStartDate().get(), req.getEndDate().get(), pageNum, pageSize);
         } else if (req.getId().isPresent())

@@ -1,6 +1,6 @@
 package com.exchangerateinterview.controller;
 
-import com.exchangerateinterview.model.ExchangeRatesPair;
+import com.exchangerateinterview.dto.ExchangeRatesPair;
 import com.exchangerateinterview.model.Transaction;
 import com.exchangerateinterview.service.RatesService;
 import io.swagger.v3.core.util.Json;

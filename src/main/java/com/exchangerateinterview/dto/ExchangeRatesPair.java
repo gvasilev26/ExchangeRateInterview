@@ -1,4 +1,4 @@
-package com.exchangerateinterview.model;
+package com.exchangerateinterview.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

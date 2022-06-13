@@ -1,4 +1,4 @@
-package com.exchangerateinterview.model;
+package com.exchangerateinterview.dto;
 
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;

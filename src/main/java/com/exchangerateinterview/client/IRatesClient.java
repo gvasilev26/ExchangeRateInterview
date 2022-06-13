@@ -1,6 +1,6 @@
 package com.exchangerateinterview.client;
 
-import com.exchangerateinterview.model.ExchangeRates;
+import com.exchangerateinterview.dto.ExchangeRates;
 import org.springframework.web.server.ResponseStatusException;
 
 public interface IRatesClient {
