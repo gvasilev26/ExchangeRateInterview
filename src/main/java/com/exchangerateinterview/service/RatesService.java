@@ -61,9 +61,7 @@ public class RatesService implements IRatesService {
     @Override
     public List<Transaction> getTransactionsPaginatedByIdOrDate(TransactionRequest req, int pageNum, int pageSize) throws ResponseStatusException {
         if (req.getId().isPresent() && req.getStartDate().isPresent() && req.getEndDate().isPresent()) {
-            List<Transaction> transactions = transactionService.findPaginatedById(req.getId().get(), pageNum, pageSize);
-            transactions.addAll(transactionService.findPaginatedByDate(req.getStartDate().get(), req.getEndDate().get(), pageNum, pageSize));
-            return transactions;
+            return transactionService.findPaginatedByIdAndDate(req.getId().get(), req.getStartDate().get(), req.getEndDate().get(), pageNum, pageSize);
         } else if (req.getId().isPresent())
             return transactionService.findPaginatedById(req.getId().get(), pageNum, pageSize);
         else if (req.getStartDate().isPresent() && req.getEndDate().isPresent())

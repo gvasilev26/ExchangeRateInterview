@@ -12,4 +12,5 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findAllByTransactionIdContaining(String transactionId, Pageable pageable);
     List<Transaction> findAllByExecutionDateBetween(Date startDate, Date endDate, Pageable pageable);
+    List<Transaction> findAllByTransactionIdContainingOrExecutionDateBetween(String transactionId, Date startDate, Date endDate, Pageable pageable);
 }
