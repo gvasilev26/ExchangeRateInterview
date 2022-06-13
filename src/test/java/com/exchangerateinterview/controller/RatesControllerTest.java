@@ -61,7 +61,7 @@ public class RatesControllerTest {
         given(ratesService.createExchangeTransaction(any())).willThrow(new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not all arguments provided"));
         this.mockMvc.perform(post("/api/v1/transaction")
                         .contentType(MediaType.APPLICATION_JSON)
-                .content(Json.pretty(new ExchangeRatesPair())))
+                        .content(Json.pretty(new ExchangeRatesPair())))
                 .andExpect(status().is4xxClientError());
     }
 

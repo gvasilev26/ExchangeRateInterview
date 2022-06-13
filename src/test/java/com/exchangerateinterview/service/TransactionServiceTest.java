@@ -33,7 +33,8 @@ public class TransactionServiceTest {
         when(transactionRepository.findAllByTransactionIdContaining("123", this.defaultPageable))
                 .thenReturn(List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123))));
         when(transactionRepository.findAllByExecutionDateBetween(any(), any(), eq(this.defaultPageable)))
-                .thenReturn(List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123))));;
+                .thenReturn(List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123))));
+        ;
     }
 
     @Test
@@ -43,7 +44,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void  givenDefaultPagination_whenPassed321_thenReturnsEmptyList() {
+    void givenDefaultPagination_whenPassed321_thenReturnsEmptyList() {
         var resp = this.transactionService.findPaginatedById("321", this.defaultPageable.getPageNumber(), this.defaultPageable.getPageSize());
         assertEquals(0, resp.size());
     }

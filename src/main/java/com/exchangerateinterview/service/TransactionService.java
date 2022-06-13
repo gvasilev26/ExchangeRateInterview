@@ -37,6 +37,7 @@ public class TransactionService implements ITransactionService {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         return transactionRepository.findAllByExecutionDateBetween(startDate, endDate, pageable);
     }
+
     @Override
     public List<Transaction> findPaginatedByIdAndDate(String transactionId, Date startDate, Date endDate, int pageNum, int pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
