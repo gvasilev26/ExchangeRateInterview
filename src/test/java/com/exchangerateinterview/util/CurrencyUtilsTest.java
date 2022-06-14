@@ -19,13 +19,13 @@ public class CurrencyUtilsTest {
     @Test
     void givenDefaultQuotes_whenPassedEur_thenReturnsProperRate() {
         var resp = CurrencyUtils.getRateByCurrency("EUR", defaultQuotes);
-        assertEquals(BigDecimal.valueOf(10.0), resp);
+        assertEquals(BigDecimal.valueOf(defaultQuotes.get("USDEUR")), resp);
     }
 
     @Test
     void givenDefaultQuotes_whenPassedBgn_thenReturnsProperRate() {
         var resp = CurrencyUtils.getRateByCurrency("BGN", defaultQuotes);
-        assertEquals(BigDecimal.valueOf(7.0), resp);
+        assertEquals(BigDecimal.valueOf(defaultQuotes.get("USDBGN")), resp);
     }
 
     @Test

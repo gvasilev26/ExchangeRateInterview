@@ -4,7 +4,6 @@ import com.exchangerateinterview.dto.ExchangeRatesPair;
 import com.exchangerateinterview.model.Transaction;
 import com.exchangerateinterview.service.RatesService;
 import io.swagger.v3.core.util.Json;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,14 +32,11 @@ public class RatesControllerTest {
     @MockBean
     private RatesService ratesService;
 
-    @BeforeEach
-    void initInstances() {
-
-    }
+    private final Transaction defaultTransaction = new Transaction("id", "EUR", "BGN", new BigDecimal(150));
 
     @Test
     void shouldCreateExchangeTransaction() throws Exception {
-        given(ratesService.createExchangeTransaction(any())).willReturn(new Transaction("id", "EUR", "BGN", new BigDecimal(150)));
+        given(ratesService.createExchangeTransaction(any())).willReturn(defaultTransaction);
         this.mockMvc.perform(post("/api/v1/transaction")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.pretty(new ExchangeRatesPair())))
@@ -50,7 +46,7 @@ public class RatesControllerTest {
 
     @Test
     void shouldNotCreateExchangeTransactionMissingBody() throws Exception {
-        given(ratesService.createExchangeTransaction(any())).willReturn(new Transaction("id", "EUR", "BGN", new BigDecimal(150)));
+        given(ratesService.createExchangeTransaction(any())).willReturn(defaultTransaction);
         this.mockMvc.perform(post("/api/v1/transaction")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
@@ -67,18 +63,19 @@ public class RatesControllerTest {
 
     @Test
     void shouldReturnExchangeRateByTargetCurrency() throws Exception {
-        given(ratesService.getExchangeRateByCurrency(any())).willReturn(BigDecimal.valueOf(0.7));
+        BigDecimal rate = BigDecimal.valueOf(0.7);
+        given(ratesService.getExchangeRateByCurrency(any())).willReturn(rate);
         this.mockMvc.perform(post("/api/v1/rate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(Json.pretty(new ExchangeRatesPair())))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(0.7));
+                .andExpect(jsonPath("$").value(rate));
     }
 
     @Test
     void shouldReturnAllTransactionsPaginatedById() throws Exception {
         given(ratesService.getTransactionsPaginatedByIdOrDate(any(), eq(0), eq(5)))
-                .willReturn(List.of(new Transaction("id", "EUR", "BGN", new BigDecimal(150))));
+                .willReturn(List.of(defaultTransaction));
         this.mockMvc.perform(post("/api/v1/transactions/0/5")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"id\": \"123\"}"))

@@ -25,15 +25,14 @@ public class TransactionServiceTest {
     @Mock
     private TransactionRepository transactionRepository;
     private final Pageable defaultPageable = PageRequest.of(0, 5);
+    private final List<Transaction> defaultTransactions = List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123)));
 
     @BeforeEach
     void initInstances() {
         transactionRepository = Mockito.mock(TransactionRepository.class);
         transactionService = new TransactionService(transactionRepository);
-        when(transactionRepository.findAllByTransactionIdContaining("123", this.defaultPageable))
-                .thenReturn(List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123))));
-        when(transactionRepository.findAllByExecutionDateBetween(any(), any(), eq(this.defaultPageable)))
-                .thenReturn(List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123))));
+        when(transactionRepository.findAllByTransactionIdContaining("123", this.defaultPageable)).thenReturn(defaultTransactions);
+        when(transactionRepository.findAllByExecutionDateBetween(any(), any(), eq(this.defaultPageable))).thenReturn(defaultTransactions);
         ;
     }
 

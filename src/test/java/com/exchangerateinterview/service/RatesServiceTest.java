@@ -28,6 +28,8 @@ class RatesServiceTest {
     @Mock
     private TransactionService transactionService;
     private RatesService ratesService;
+    private final ExchangeRatesPair defaultExchangeRatesPair = new ExchangeRatesPair("EUR", "BGN", new BigDecimal(150));
+    private final List<Transaction> defaultTransactions = List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123)));
 
     @BeforeEach
     void initInstances() {
@@ -39,14 +41,12 @@ class RatesServiceTest {
                 "USDBGN", 7.0);
         ExchangeRates exchangeRates = new ExchangeRates(true, "", "", (new Date()).getTime(), "", quotes);
         when(ratesClient.getLatestRates()).thenReturn(exchangeRates);
-        when(transactionService.findPaginatedById("123", 0, 5))
-                .thenReturn(List.of(new Transaction("123", "USD", "EUR", new BigDecimal(123))));
+        when(transactionService.findPaginatedById("123", 0, 5)).thenReturn(defaultTransactions);
     }
 
     @Test
     void getAmountByCurrencyEurBgnSuccess() {
-        var currencyPair = new ExchangeRatesPair("EUR", "BGN", new BigDecimal(150));
-        var transaction = ratesService.createExchangeTransaction(currencyPair);
+        var transaction = ratesService.createExchangeTransaction(defaultExchangeRatesPair);
         assertEquals(105.0, transaction.getAmount().doubleValue());
     }
 
@@ -58,8 +58,7 @@ class RatesServiceTest {
 
     @Test
     void getRateByCurrency() {
-        var currencyPair = new ExchangeRatesPair("EUR", "BGN", new BigDecimal(150));
-        var rate = ratesService.getExchangeRateByCurrency(currencyPair);
+        var rate = ratesService.getExchangeRateByCurrency(defaultExchangeRatesPair);
         assertEquals(0.7, rate.doubleValue());
     }
 
